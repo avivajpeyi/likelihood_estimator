@@ -5,30 +5,28 @@ Module Docstring
 from unittest import TestCase
 from unittest.mock import Mock, patch
 
+import estimator.bayes.priors as priors
 import numpy as np
 from estimator.models.data_container_base import DataContainer
 from estimator.models.gaussian_noise import GaussianNoiseModel
 from estimator.models.line import LineModel
+from estimator.models.plotting_utils import plot_toy_dataset
 from estimator.models.toy_dataset import RecordedData, split_recorded_data
 
-__author__ = 'Avi'
-__version__ = '0.1.0'
+__author__ = "Avi"
+__version__ = "0.1.0"
 
 
 class TestDataModels(TestCase):
-    def make_data(self):
+    @staticmethod
+    def make_data():
         n = 10
         time = np.linspace(start=0, stop=10, num=n)
-
-        m_true = 5
-        c_true = 2
-        mu_true = 0
-        sigma_true = 5
-
-        s = LineModel(size=n, m=m_true, c=c_true, x=time)
-        n = GaussianNoiseModel(size=n, mu=mu_true, sigma=sigma_true, x=time)
+        s = LineModel(size=n, m=priors.M_TRUE, c=priors.C_TRUE, x=time)
+        n = GaussianNoiseModel(
+            size=n, mu=priors.MU_NOISE_TRUE, sigma=priors.SIGMA_NOISE_TRUE, x=time
+        )
         d = RecordedData(noise=n, signal=s)
-
         return d, n, s
 
     def test_constructors(self):
@@ -64,3 +62,9 @@ class TestDataModels(TestCase):
         self.assertEqual(my_abstract.model(), 3)
 
         DataContainer.from_dict({})
+
+    def test_plot(self):
+        d, n, s = self.make_data()
+        num_splits = 5
+        recorded_data_list = split_recorded_data(recorded_data=d, splits=num_splits)
+        plot_toy_dataset(recorded_data_list, fname="toy_data_test.html")

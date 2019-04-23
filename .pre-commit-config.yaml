@@ -9,7 +9,6 @@ repos:
     rev: v2.0.0
     hooks:
     - id: flake8
-    - id: double-quote-string-fixer
     - id: requirements-txt-fixer
     - id: trailing-whitespace
 -   repo: https://github.com/pre-commit/mirrors-isort
