@@ -27,17 +27,13 @@ $(BUILD_DIR):
 	mkdir $(BUILD_DIR)
 
 git-hooks:
-
-
-
-
-
 	pre-commit install
 
 setup: $(VENV_DIR) git-hooks
 
 clean:
 	find . -name "*.pyc" | xargs rm
+	find . -name "*test.html" | xargs rm
 
 cleanall: clean
 	rm -rf $(VENV_DIR)
