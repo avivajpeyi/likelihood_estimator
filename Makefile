@@ -1,0 +1,52 @@
+$(PYTHON)# Likelihood Estimator Makefile
+# Used for generic management tasks
+#
+# standard variables  -------------------------------------------------------
+
+
+SRC_DIR=estimator/
+
+BUILD_DIR=build
+
+VENV_DIR=venv
+
+PYTHON=python3
+ACTIVATE_VENV=source $(VENV_DIR)/bin/activate
+
+# targets -------------------------------------------------------------------
+
+# ------------------------
+# SETUP and CLEANUP targets
+#
+
+$(VENV_DIR):
+	$(PYTHON) -m venv $(VENV_DIR)
+	$(ACTIVATE_VENV) && pip install -r requirements.txt
+
+$(BUILD_DIR):
+	mkdir $(BUILD_DIR)
+
+git-hooks:
+
+
+
+
+
+	pre-commit install
+
+setup: $(VENV_DIR) git-hooks
+
+clean:
+	find . -name "*.pyc" | xargs rm
+
+cleanall: clean
+	rm -rf $(VENV_DIR)
+
+# ------------------------
+# TEST AND ANALYSIS targets
+#
+
+test: setup
+	$(ACTIVATE_VENV)  && coverage run --source $(SRC_DIR) -m unittest discover
+	$(ACTIVATE_VENV)  && coverage report  --omit '*/venv/*,*test_*,*/lib/*' --fail-under=5 -m --skip-covered
+	$(ACTIVATE_VENV) && coverage html --omit '*/venv/*,*test_*'

@@ -1,0 +1,13 @@
+# clean code
+black
+
+# testing
+coverage
+flake8
+flake8-bugbear
+isort
+
+#
+numpy
+pre-commit
+pycodestyle
