@@ -44,6 +44,10 @@ class TestDataModels(TestCase):
         recorded_data_list = split_recorded_data(recorded_data=d, splits=num_splits)
         self.assertTrue(len(recorded_data_list) == 1)
 
+    def test_line_model(self):
+        sig = LineModel.model([0, 1, 2, 3], m=1, c=0)
+        self.assertFalse(np.isnan(sig).any())
+
     def test_str(self):
         d, n, s = self.make_data()
         self.assertTrue(isinstance(d.__repr__(), str))

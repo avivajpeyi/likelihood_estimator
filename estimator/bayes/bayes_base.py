@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 import estimator.bayes.priors as priors
 import numpy as np
+from scipy.special import logsumexp
 from scipy.stats import uniform
 
 
@@ -15,6 +16,7 @@ class BayesToyBase(ABC):
     # Initializer / Instance Attributes
     def __init__(self):
         self._ln_post_grid = None
+        self.ln_posterior_grid_vec = np.vectorize(self.ln_posterior_grid)
 
     def __repr__(self):
         return self.__str__()
@@ -37,19 +39,23 @@ class BayesToyBase(ABC):
         in_sigma_range = priors.SIGMA_MIN <= sigma <= priors.SIGMA_MAX
 
         if in_m_range and in_c_range and in_mu_range and in_sigma_range:
-            ln_pi_m = uniform.logpdf(m, loc=priors.M_MIN, scale=priors.M_MIN)
-            ln_pi_c = uniform.logpdf(c, loc=priors.C_MIN, scale=priors.C_MIN)
+            ln_pi_m = uniform.logpdf(m, loc=priors.M_MIN, scale=priors.M_MAX)
+            ln_pi_c = uniform.logpdf(c, loc=priors.C_MIN, scale=priors.C_MAX)
             ln_pi = ln_pi_m + ln_pi_c
         else:
             ln_pi = -np.inf
+
+        assert not np.isnan(ln_pi)
 
         return ln_pi
 
     def ln_posterior(self, theta, *args, **kwargs) -> np.float:
         return self.ln_prior(theta) + self.ln_likelihood(theta)
 
-    @np.vectorize
-    def ln_posterior_grid(self, mm, cc):
-        if not self._ln_post_grid:
-            self._ln_post_grid = self.ln_posterior(theta=[mm, cc])
-        return self._ln_post_grid
+    def ln_posterior_grid(self, mm, cc, *args, **kwargs):
+        return self.ln_posterior(theta=[mm, cc])
+
+    def ln_evidence(self):
+        ln_post_grid = self.ln_posterior_grid_vec(priors.M_GRID, priors.C_GRID)
+        ln_evid = logsumexp(ln_post_grid, b=priors.DC * priors.DM)
+        return ln_evid
