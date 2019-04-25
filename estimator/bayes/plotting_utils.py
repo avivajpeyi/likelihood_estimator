@@ -11,9 +11,9 @@ def plot_contour(twod_z_values, title="Post Prob"):
             "z": twod_z_values,
             "colorscale": "Jet",
             "type": u"contour",
-            "dx": priors.DM,
+            "dx": (priors.M_MAX - priors.M_MIN) / priors.NUM_GRID_POINTS,
             "x0": priors.M_MIN,
-            "dy": priors.DC,
+            "dy": (priors.C_MAX - priors.C_MIN) / priors.NUM_GRID_POINTS,
             "y0": priors.C_MIN,
         }
     ]

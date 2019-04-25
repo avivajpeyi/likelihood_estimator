@@ -2,8 +2,12 @@
 black
 corner
 
+
 # testing
 coverage
+
+# Mcmc
+emcee
 flake8
 flake8-bugbear
 isort

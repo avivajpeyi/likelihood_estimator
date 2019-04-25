@@ -3,10 +3,14 @@ import numpy as np
 
 # SIGNAL PARAMETERS
 M_TRUE = -0.9594  # line slope of straight-line component
-C_TRUE = 4.3  # size of the power-law component
+C_TRUE = 4.3  # line y-axis intercept
 M_MIN, M_MAX = -2, 2
 C_MIN, C_MAX = 2, 20
-M_VEC, C_VEC = np.linspace(M_MIN, M_MAX, 100), np.linspace(C_MIN, C_MAX, 100)
+NUM_GRID_POINTS = 100
+M_VEC, C_VEC = (
+    np.linspace(M_MIN, M_MAX, NUM_GRID_POINTS),
+    np.linspace(C_MIN, C_MAX, NUM_GRID_POINTS),
+)
 M_GRID, C_GRID = np.meshgrid(M_VEC, C_VEC)
 DM, DC = M_VEC[1] - M_VEC[0], C_VEC[1] - C_VEC[0]
 

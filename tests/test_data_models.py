@@ -21,7 +21,21 @@ class TestDataModels(TestCase):
     @staticmethod
     def make_data():
         n = 10
-        time = np.linspace(start=0, stop=10, num=n)
+        time = np.array(
+            [
+                1.7808099,
+                2.37694209,
+                2.8589569,
+                3.40190215,
+                3.54795612,
+                3.59507844,
+                5.98858946,
+                8.52395088,
+                8.84853293,
+                9.75006494,
+            ]
+        )
+
         s = LineModel(size=n, m=priors.M_TRUE, c=priors.C_TRUE, x=time)
         n = GaussianNoiseModel(
             size=n, mu=priors.MU_NOISE_TRUE, sigma=priors.SIGMA_NOISE_TRUE, x=time
