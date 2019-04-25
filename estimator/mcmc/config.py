@@ -1,0 +1,3 @@
+#!/usr/bin/env python3
+N_DIM, N_WALKERS, N_STEPS = 2, 100, 2000
+BURNIN_AMOUNT = 1500

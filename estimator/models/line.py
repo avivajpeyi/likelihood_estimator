@@ -16,4 +16,4 @@ class LineModel(DataContainer):
 
     @staticmethod
     def model(x: np.array, m: float, c: float) -> np.array:
-        return m * x + c
+        return (m * np.array(x)) + c
