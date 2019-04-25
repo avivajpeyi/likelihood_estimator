@@ -35,6 +35,7 @@ clean:
 	find . -name "*.pyc" | xargs rm
 	find . -name "*test.html" | xargs rm
 
+
 cleanall: clean
 	rm -rf $(VENV_DIR)
 
@@ -43,6 +44,8 @@ cleanall: clean
 #
 
 test: setup
+	rm -rf tests/temp/*
 	$(ACTIVATE_VENV)  && coverage run --source $(SRC_DIR) -m unittest discover
 	$(ACTIVATE_VENV)  && coverage report  --omit '*/venv/*,*test_*,*/lib/*' --fail-under=5 -m --skip-covered
 	$(ACTIVATE_VENV) && coverage html --omit '*/venv/*,*test_*'
+
