@@ -3,6 +3,7 @@
 from typing import List
 
 import numpy as np
+
 from estimator.models.data_container_base import DataContainer
 from estimator.models.gaussian_noise import GaussianNoiseModel
 from estimator.models.line import LineModel

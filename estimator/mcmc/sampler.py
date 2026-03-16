@@ -5,6 +5,7 @@ from typing import Callable
 import emcee
 import numpy as np
 import pandas as pd
+
 from estimator.mcmc.config import SamplerConfig
 
 #

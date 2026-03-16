@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-import estimator.bayes.priors as priors
 import plotly.graph_objs as go
 from plotly.offline import plot
+
+import estimator.bayes.priors as priors
 
 
 def plot_contour(twod_z_values, title="Post Prob"):
@@ -10,7 +11,7 @@ def plot_contour(twod_z_values, title="Post Prob"):
         {
             "z": twod_z_values,
             "colorscale": "Jet",
-            "type": u"contour",
+            "type": "contour",
             "dx": (priors.M_MAX - priors.M_MIN) / priors.NUM_GRID_POINTS,
             "x0": priors.M_MIN,
             "dy": (priors.C_MAX - priors.C_MIN) / priors.NUM_GRID_POINTS,

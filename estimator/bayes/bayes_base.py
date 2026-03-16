@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
 
-import estimator.bayes.priors as priors
 import numpy as np
 from scipy.special import logsumexp
 from scipy.stats import uniform
+
+import estimator.bayes.priors as priors
 
 
 class BayesToyBase(ABC):

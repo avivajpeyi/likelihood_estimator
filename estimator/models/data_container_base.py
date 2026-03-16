@@ -26,7 +26,7 @@ class DataContainer(ABC):
 
     # string
     def __str__(self):
-        return str('{}:\nx: {}\ny: {}'.format(self.__class__.__name__, self.x, self.y))
+        return str("{}:\nx: {}\ny: {}".format(self.__class__.__name__, self.x, self.y))
 
     @staticmethod
     @abstractmethod
@@ -36,7 +36,7 @@ class DataContainer(ABC):
     @classmethod
     def from_dict(cls, data_dict: dict):
         return cls(
-            size=data_dict.get('size', 0),
-            x=data_dict.get('x', []),
-            y=data_dict.get('y', []),
+            size=data_dict.get("size", 0),
+            x=data_dict.get("x", []),
+            y=data_dict.get("y", []),
         )

@@ -3,14 +3,14 @@
 Util functions
 """
 
-__author__ = 'Avi'
-__version__ = '0.1.0'
+__author__ = "Avi"
+__version__ = "0.1.0"
 
 import functools
 
 
 def lazy_property(function):
-    attribute = '_cache_' + function.__name__
+    attribute = "_cache_" + function.__name__
 
     @property
     @functools.wraps(function)
@@ -25,22 +25,22 @@ def lazy_property(function):
 # function to run shell comands
 def execute_in_shell(command=None, verbose=False):
     """
-        command -- keyword argument, takes a list as input
-        verbsoe -- keyword argument, takes a boolean value as input
+    command -- keyword argument, takes a list as input
+    verbsoe -- keyword argument, takes a boolean value as input
 
-        This is a function that executes shell scripts from within python.
+    This is a function that executes shell scripts from within python.
 
-        Keyword argument 'command', should be a list of shell commands.
-        Keyword argument 'versboe', should be a boolean value to set verbose level.
+    Keyword argument 'command', should be a list of shell commands.
+    Keyword argument 'versboe', should be a boolean value to set verbose level.
 
-        Example usage: execute_in_shell(command = ['ls ./some/folder/',
-                                                    ls ./some/folder/  -1 | wc -l'],
-                                        verbose = True )
+    Example usage: execute_in_shell(command = ['ls ./some/folder/',
+                                                ls ./some/folder/  -1 | wc -l'],
+                                    verbose = True )
 
-        This command returns dictionary with elements: Output and Error.
+    This command returns dictionary with elements: Output and Error.
 
-        Output records the console output,
-        Error records the console error messages.
+    Output records the console output,
+    Error records the console error messages.
 
     """
     error = []
@@ -57,17 +57,17 @@ def execute_in_shell(command=None, verbose=False):
                 error.append(err)
                 output.append(out)
                 if verbose:
-                    print('Success running shell command: {}'.format(command[i]))
+                    print("Success running shell command: {}".format(command[i]))
             except Exception as e:
-                print('Failed running shell command: {}'.format(command[i]))
+                print("Failed running shell command: {}".format(command[i]))
                 if verbose:
                     print(type(e))
                     print(e.args)
                     print(e)
 
     else:
-        print('The argument command takes a list input ...')
-    return {'Output': output, 'Error': error}
+        print("The argument command takes a list input ...")
+    return {"Output": output, "Error": error}
 
 
 def benchmark(func, args, n_run):
