@@ -44,9 +44,9 @@ class RegressionModel:
         rms_optimizer = tf.keras.optimizers.RMSprop(LEARNING_RATE)
 
         model.compile(
-            loss='mean_squared_error',
+            loss="mean_squared_error",
             optimizer=rms_optimizer,
-            metrics=['mean_absolute_error', 'mean_squared_error'],
+            metrics=["mean_absolute_error", "mean_squared_error"],
         )
         return model
 
@@ -58,7 +58,7 @@ def simple_test_of_model(model, test_data, test_labels, verbose=False):
 
     loss, mae, mse = model.evaluate(test_data[:10], test_labels[:10], verbose=0)
     if verbose:
-        print('Model Mean Abs Error: +/- {:5.2f} ln like'.format(mae))
+        print("Model Mean Abs Error: +/- {:5.2f} ln like".format(mae))
     return mae
 
 
@@ -76,12 +76,12 @@ def train_model(
 
         def on_epoch_end(self, epoch, logs):
             if epoch % 100 == 0:
-                print('')
-            print('.', end='')
+                print("")
+            print(".", end="")
 
     # Earlt stop callback
     early_stop = keras.callbacks.EarlyStopping(
-        monitor='val_loss',  # Training will stop when 'val_loss' stops improving
+        monitor="val_loss",  # Training will stop when 'val_loss' stops improving
         verbose=1,
         patience=30,  # Num Epochs to check for improvement
     )
@@ -108,7 +108,7 @@ def train_model(
 
 
 def test_model(
-    model, hist_df, test_df, test_labels, fname='model_testing.html', save_plot=False
+    model, hist_df, test_df, test_labels, fname="model_testing.html", save_plot=False
 ):
     enable_plotly_in_cell()
 
@@ -117,60 +117,60 @@ def test_model(
     test_predictions = model.predict(test_df).flatten()
 
     mae_train, mae_val = (
-        hist_df['mean_absolute_error'],
-        hist_df['val_mean_absolute_error'],
+        hist_df["mean_absolute_error"],
+        hist_df["val_mean_absolute_error"],
     )
     mse_train, mse_val = (
-        hist_df['mean_squared_error'],
-        hist_df['val_mean_squared_error'],
+        hist_df["mean_squared_error"],
+        hist_df["val_mean_squared_error"],
     )
 
     trace1 = go.Scatter(
         x=test_labels,
         y=test_predictions,
-        mode='markers',
+        mode="markers",
         showlegend=False,
-        name='Prediction VS Obs',
+        name="Prediction VS Obs",
     )
     best_predection = [test_labels.min(), test_labels.max()]
     traceTrue = go.Scatter(
         x=best_predection,
         y=best_predection,
-        line=dict(color=('rgb(0,0,0)'), dash='dash'),
+        line=dict(color=("rgb(0,0,0)"), dash="dash"),
         showlegend=False,
-        name='Perfect Predition',
+        name="Perfect Predition",
     )
     trace2 = go.Histogram(
-        x=test_predictions - test_labels, showlegend=False, name='Error Count'
+        x=test_predictions - test_labels, showlegend=False, name="Error Count"
     )
 
     fig = plotly_tools.make_subplots(
         rows=1,
         cols=2,
-        subplot_titles=('Predictions vs Observed [ln like]', 'Error Distribution'),
+        subplot_titles=("Predictions vs Observed [ln like]", "Error Distribution"),
     )
     fig.append_trace(traceTrue, 1, 1)
     fig.append_trace(trace1, 1, 1)
     fig.append_trace(trace2, 1, 2)
 
-    fig['layout']['xaxis1'].update(title='Observations')
-    fig['layout']['yaxis1'].update(title='Predictions')
+    fig["layout"]["xaxis1"].update(title="Observations")
+    fig["layout"]["yaxis1"].update(title="Predictions")
 
-    fig['layout']['xaxis2'].update(title='Predition Error Amount [ln Like]')
-    fig['layout']['yaxis2'].update(title='Error Count', type='log', autorange=True)
+    fig["layout"]["xaxis2"].update(title="Predition Error Amount [ln Like]")
+    fig["layout"]["yaxis2"].update(title="Error Count", type="log", autorange=True)
 
-    fig['layout'].update(title='Testing Model')
-    new_annotations = list(fig['layout']['annotations'])
+    fig["layout"].update(title="Testing Model")
+    new_annotations = list(fig["layout"]["annotations"])
     new_annotations.append(
         dict(
             x=test_labels.min(),
             y=-10,
-            text='Model Mean Abs Err:\n +/- {:5.2f} lnLike'.format(mae),
+            text="Model Mean Abs Err:\n +/- {:5.2f} lnLike".format(mae),
             showarrow=False,
         )
     )
 
-    fig['layout']['annotations'] = tuple(new_annotations)
+    fig["layout"]["annotations"] = tuple(new_annotations)
 
     if save_plot == True:
         plot(fig, filename=fname)  # saves HTML
@@ -183,58 +183,58 @@ def test_model(
 
 
 def plot_training_history(
-    hist: pd.DataFrame, fname='model_training.html', save_plot=False
+    hist: pd.DataFrame, fname="model_training.html", save_plot=False
 ):
     enable_plotly_in_cell()
 
     epochs = hist.index.values
-    mae_train, mae_val = (hist['mean_absolute_error'], hist['val_mean_absolute_error'])
-    mse_train, mse_val = (hist['mean_squared_error'], hist['val_mean_squared_error'])
+    mae_train, mae_val = (hist["mean_absolute_error"], hist["val_mean_absolute_error"])
+    mse_train, mse_val = (hist["mean_squared_error"], hist["val_mean_squared_error"])
 
     fig = plotly_tools.make_subplots(
-        rows=1, cols=2, subplot_titles=('Mean Abs Error', 'Mean Square Error')
+        rows=1, cols=2, subplot_titles=("Mean Abs Error", "Mean Square Error")
     )
 
     # Mean Abs Error Plot
     trace1 = go.Scatter(
         x=epochs,
         y=mae_train,
-        line=dict(color=('rgb(205, 12, 24)'), dash='dash'),
-        name='Train Error',
+        line=dict(color=("rgb(205, 12, 24)"), dash="dash"),
+        name="Train Error",
         showlegend=False,
     )
     trace2 = go.Scatter(
         x=epochs,
         y=mae_val,
-        line=dict(color=('rgb(22, 96, 167)')),
-        name='Val Error',
+        line=dict(color=("rgb(22, 96, 167)")),
+        name="Val Error",
         showlegend=False,
     )
     fig.append_trace(trace1, 1, 1)
     fig.append_trace(trace2, 1, 1)
-    fig['layout']['xaxis1'].update(title='Epoch')
-    fig['layout']['yaxis1'].update(
-        title=r'Mean Abs Error [ ln like ]', type='log', autorange=True
+    fig["layout"]["xaxis1"].update(title="Epoch")
+    fig["layout"]["yaxis1"].update(
+        title=r"Mean Abs Error [ ln like ]", type="log", autorange=True
     )
 
     # Mean Sqr Error Plot
     trace3 = go.Scatter(
         x=epochs,
         y=mse_train,
-        line=dict(color=('rgb(205, 12, 24)'), dash='dash'),
-        name='Train Error',
+        line=dict(color=("rgb(205, 12, 24)"), dash="dash"),
+        name="Train Error",
     )
     trace4 = go.Scatter(
-        x=epochs, y=mse_val, line=dict(color=('rgb(22, 96, 167)')), name='Val Error'
+        x=epochs, y=mse_val, line=dict(color=("rgb(22, 96, 167)")), name="Val Error"
     )
     fig.append_trace(trace3, 1, 2)
     fig.append_trace(trace4, 1, 2)
-    fig['layout']['xaxis2'].update(title='Epoch')
-    fig['layout']['yaxis2'].update(
-        title=r'Mean Square Error [ (ln like)^2 ]', type='log', autorange=True
+    fig["layout"]["xaxis2"].update(title="Epoch")
+    fig["layout"]["yaxis2"].update(
+        title=r"Mean Square Error [ (ln like)^2 ]", type="log", autorange=True
     )
 
-    fig['layout'].update(title='Training Accuracy')
+    fig["layout"].update(title="Training Accuracy")
 
     if save_plot == True:
         plot(fig, filename=fname)  # saves HTML

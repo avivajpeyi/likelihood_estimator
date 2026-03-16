@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 from unittest import TestCase
 
-import estimator.bayes.priors as priors
 import numpy as np
+
+import estimator.bayes.priors as priors
 from estimator.bayes.plotting_utils import plot_contour
 from estimator.mcmc.config import SamplerConfig
 from estimator.mcmc.plotting_utils import plot_corner

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
-import estimator.bayes.priors as priors
 import numpy as np
+
+import estimator.bayes.priors as priors
 from estimator.bayes.bayes_line import BayesLine, BayesLineChunks
 from estimator.models.gaussian_noise import GaussianNoiseModel
 from estimator.models.line import LineModel

@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 from unittest import TestCase
 
-import estimator.bayes.priors as priors
 import numpy as np
+
+import estimator.bayes.priors as priors
 from tests.utils import make_chunked_data, make_data
 
 __author__ = "Avi"

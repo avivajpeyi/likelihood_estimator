@@ -2,12 +2,13 @@
 
 from typing import List
 
-import estimator.bayes.priors as priors
 import numpy as np
+from scipy.stats import norm
+
+import estimator.bayes.priors as priors
 from estimator.bayes.bayes_base import BayesToyBase
 from estimator.models.line import LineModel
 from estimator.models.toy_dataset import RecordedData
-from scipy.stats import norm
 
 
 class BayesLine(BayesToyBase):

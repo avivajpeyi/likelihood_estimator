@@ -2,12 +2,14 @@
 """
 Plotting functions
 """
+
 from typing import List, Optional
 
 import numpy as np
 import plotly.graph_objs as go
-from estimator.models.toy_dataset import RecordedData
 from plotly.offline import plot
+
+from estimator.models.toy_dataset import RecordedData
 
 __author__ = "Avi"
 __version__ = "0.1.0"

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import matplotlib
+
 from estimator.bayes import priors
 
 matplotlib.use("PS")

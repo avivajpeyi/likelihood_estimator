@@ -2,10 +2,12 @@
 """
 Module Docstring
 """
+
 from unittest import TestCase
 from unittest.mock import Mock, patch
 
 import numpy as np
+
 from estimator.models.data_container_base import DataContainer
 from estimator.models.line import LineModel
 from estimator.models.toy_dataset import split_recorded_data
